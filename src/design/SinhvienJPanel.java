@@ -4,22 +4,27 @@
  */
 package design;
 
+import dao.SinhVienDAO;
 import design.popup.SinhvienJFrame;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import share.DBConnect;
-import model.Sinhvien;
+import model.SinhVien;
 
 /**
  *
@@ -33,19 +38,27 @@ public class SinhvienJPanel extends javax.swing.JPanel {
     private SinhvienJPanel sinhvienJPanel = this;
     public SinhvienJPanel() {
         initComponents();
+        
         tbSinhVien.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Lấy số hàng đã được nhấp
                 if (e.getClickCount() == 2) {
                     int row = tbSinhVien.getSelectedRow();
-                Sinhvien sinhvien = new Sinhvien();
-                sinhvien.setMasinhvien(  tbSinhVien.getValueAt(row, 0).toString()) ;
-                sinhvien.setTensinhvien(tbSinhVien.getValueAt(row, 1).toString()) ;
-                SinhvienJFrame frame = new SinhvienJFrame(sinhvienJPanel, sinhvien, true);
-                frame.setTitle("Sửa thông tin");
+                    SinhVien sinhvien = new SinhVien();
+                    sinhvien.setId((int) tbSinhVien.getValueAt(row, 0));
+                    sinhvien.setTen((String) tbSinhVien.getValueAt(row, 1));
+                    sinhvien.setNgay_sinh((Date) tbSinhVien.getValueAt(row, 2));
+                    sinhvien.setGioi_tinh((String) tbSinhVien.getValueAt(row, 3));
+                    sinhvien.setSđt((String) tbSinhVien.getValueAt(row, 4));
+                    sinhvien.setEmail((String) tbSinhVien.getValueAt(row, 5));
+                    sinhvien.setDia_chi((String) tbSinhVien.getValueAt(row, 6));
+                    sinhvien.setGpa((BigDecimal) tbSinhVien.getValueAt(row, 7));
+                    sinhvien.setId_lopbienche((int)tbSinhVien.getValueAt(row, 8));
+                    SinhvienJFrame frame = new SinhvienJFrame(sinhvienJPanel, sinhvien, true);
+                    frame.setTitle("Sửa thông tin");
                 
-                frame.setVisible(true);
+                    frame.setVisible(true);
                 }
                 
             }
@@ -68,43 +81,27 @@ public class SinhvienJPanel extends javax.swing.JPanel {
 
             
         });
+        
         JTableHeader thead = tbSinhVien.getTableHeader();
+        
         thead.setFont(new Font("Segoe", Font.ITALIC,16));
         thead.setBackground(new Color(200,255,255));
         loaddata();
     }
 
     public void loaddata() {
-        try (Connection connection = DBConnect.getConnection()) {
-        // Kiểm tra nếu kết nối thành công
-        if (connection != null) {
-            // Chuẩn bị câu truy vấn SQL để lấy dữ liệu từ bảng khachhang
-            String query = "SELECT * FROM SinhVien";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                // Xóa dữ liệu hiện tại trong bảng
-                DefaultTableModel model = (DefaultTableModel) tbSinhVien.getModel();
-                model.setRowCount(0);
-
-                // Duyệt qua kết quả và thêm vào bảng
-                while (resultSet.next()) {
-                    String cid = resultSet.getString("MaSv");
-                    String cname = resultSet.getString("HoTen");
-//                    String ngaysinh = resultSet.getString("NgaySinh");
-//                    String gioitinh = resultSet.getString("GioiTinh");
-//                    String diachi = resultSet.getString("DiaCHi");
-                    
-
-                    model.addRow(new Object[]{cid, cname});
-                }
-            } catch (SQLException ex) {
-                System.err.println("Lỗi thực hiện truy vấn: " + ex.getMessage());
+        
+        try {
+            DefaultTableModel model = (DefaultTableModel) tbSinhVien.getModel();
+            model.setRowCount(0);
+            ArrayList<SinhVien> list = SinhVienDAO.list();
+            for (SinhVien item : list) {
+                model.addRow(new Object[]{item.getId(), item.getTen(), item.getNgay_sinh(),
+                    item.getGioi_tinh(), item.getSđt(), item.getEmail(), item.getDia_chi(),
+                    item.getGpa(), item.getId_lopbienche()});
             }
-        }
-        } catch (SQLException ex) {
-            System.err.println("Lỗi kết nối đến cơ sở dữ liệu: " + ex.getMessage());
+        } catch (Exception e ) {
+            
         }
     }
     
@@ -120,7 +117,6 @@ public class SinhvienJPanel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbSinhVien = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
@@ -143,20 +139,25 @@ public class SinhvienJPanel extends javax.swing.JPanel {
         tbSinhVien.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã SV", "Họ Tên"
+                "Mã SV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SDT", "Email", "Địa Chỉ", "GPA", "Lớp"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -167,13 +168,19 @@ public class SinhvienJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbSinhVien.setColumnSelectionAllowed(false);
+        tbSinhVien.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tbSinhVien.setGridColor(new java.awt.Color(0, 0, 153));
         tbSinhVien.setPreferredSize(new java.awt.Dimension(980, 600));
         tbSinhVien.setRequestFocusEnabled(false);
         tbSinhVien.setRowHeight(30);
         tbSinhVien.setRowMargin(10);
-        tbSinhVien.setSelectionBackground(new java.awt.Color(204, 204, 255));
-        tbSinhVien.setSelectionForeground(new java.awt.Color(51, 51, 255));
+        tbSinhVien.setSelectionBackground(new java.awt.Color(255, 153, 153));
+        tbSinhVien.setSelectionForeground(new java.awt.Color(255, 0, 51));
+        tbSinhVien.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbSinhVien.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbSinhVien.setShowGrid(true);
+        tbSinhVien.setSurrendersFocusOnKeystroke(true);
         jScrollPane1.setViewportView(tbSinhVien);
 
         jButton2.setBackground(new java.awt.Color(112, 112, 255));
@@ -193,10 +200,9 @@ public class SinhvienJPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 501, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -208,10 +214,9 @@ public class SinhvienJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -229,9 +234,9 @@ public class SinhvienJPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Sinhvien sinhvien = new Sinhvien();
+        SinhVien sinhvien = new SinhVien();
         SinhvienJFrame frame = new SinhvienJFrame(sinhvienJPanel,sinhvien, false);
-        
+        frame.setTitle("Thêm Sinh Viên");
         frame.setVisible(true);
         
 
@@ -243,37 +248,14 @@ public class SinhvienJPanel extends javax.swing.JPanel {
 
         if (selectedRowIndex != -1) {
             // Lấy giá trị của cột CID từ dòng được chọn
-            String cid = tbSinhVien.getValueAt(selectedRowIndex, 0).toString();
+            int id = (int) tbSinhVien.getValueAt(selectedRowIndex, 0);
 
             int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn xoa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
-                try (Connection connection = DBConnect.getConnection()) {
-                    // Kiểm tra nếu kết nối thành công
-                    if (connection != null) {
-                        // Chuẩn bị câu truy vấn SQL để xóa thông tin khách hàng
-                        String query = "DELETE FROM SinhVien WHERE MaSv = ?";
-
-                        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                            // Thiết lập giá trị cho tham số trong câu truy vấn
-                            preparedStatement.setString(1, cid);
-
-                            // Thực hiện truy vấn xóa
-                            int rowsAffected = preparedStatement.executeUpdate();
-
-                            if (rowsAffected > 0) {
-                                System.out.println("Xóa thông tin khách hàng thành công!");
-                                // Sau khi xóa thành công, cập nhật lại bảng
-                                loaddata();
-                            } else {
-                                System.out.println("Không tìm thấy khách hàng để xóa!");
-                            }
-                        } catch (SQLException ex) {
-                            System.err.println("Lỗi thực hiện truy vấn xóa: " + ex.getMessage());
-                        }
-                    }
-                } catch (SQLException ex) {
-                    System.err.println("Lỗi kết nối đến cơ sở dữ liệu: " + ex.getMessage());
+                int a = SinhVienDAO.delete(id);
+                if(a>0) {
+                    loaddata();
                 }
             }
         } else {
@@ -288,7 +270,6 @@ public class SinhvienJPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbSinhVien;
     // End of variables declaration//GEN-END:variables
 }

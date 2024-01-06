@@ -7,7 +7,7 @@ package design;
 import controller.Chuyenman;
 import java.util.ArrayList;
 import java.util.List;
-import share.DanhMuc;
+import controller.DanhMuc;
 
 /**
  *
@@ -21,7 +21,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         
-        setTitle("Quản Lý Điểm Học Sinh");
+        setTitle("Quản Lý Điểm Sinh Viên");
         
         Chuyenman controller = new Chuyenman(pnView);
         

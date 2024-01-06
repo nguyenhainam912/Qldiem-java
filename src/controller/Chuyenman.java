@@ -19,7 +19,6 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import share.DanhMuc;
 
 /**
  *
