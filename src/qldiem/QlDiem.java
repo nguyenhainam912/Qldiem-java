@@ -20,6 +20,7 @@ public class QlDiem {
     public static void main(String[] args) {
         // TODO code application logic here
         new MainJFrame().setVisible(true);
+        //aa
     }
     
 }
