@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package design.popup;
+import com.toedter.calendar.JDateChooser;
+import controller.MyComboBox;
+import dao.LopBienCheDAO;
 import dao.SinhVienDAO;
 import design.SinhvienJPanel;
 import java.awt.event.ActionEvent;
@@ -13,10 +16,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
 import model.SinhVien;
+import model.LopBienChe;
 /**
  *
  * @author nguye
@@ -34,6 +44,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         this.sinhvienJPanel = sinhvienJPanel;
         this.sinhvien = sinhvien;
         this.isUpdate = isUpdate;
+        loadCombobox();
         if (isUpdate ) {
             loadDataUpdate();
         }
@@ -55,7 +66,6 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
-        dpBirth = new org.jdatepicker.JDatePicker();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cbGender = new javax.swing.JComboBox<>();
@@ -69,6 +79,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtGPA = new javax.swing.JTextField();
         cbLop = new javax.swing.JComboBox<>();
+        dpBirth = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -106,7 +117,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Giới Tính");
 
-        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác", " " }));
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nu", "Khac", " " }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Mã SV");
@@ -133,13 +144,10 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,29 +169,24 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                         .addGap(32, 32, 32))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cbLop, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(dpBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cbLop, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(349, 349, 349))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(dpBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(58, 58, 58)
+                        .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,9 +206,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel5)
-                    .addComponent(dpBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dpBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
@@ -213,10 +214,16 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(txtGPA, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel11)
-                    .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(69, 69, 69))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel2Layout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.CENTER))
+                .addGap(165, 165, 165))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -250,8 +257,6 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.getAccessibleContext().setAccessibleName("Lưu");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -277,16 +282,17 @@ public class SinhvienJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
-//            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-//            BigDecimal bigDecimal = (BigDecimal) decimalFormat.parse(txtGPA.getText());
             sinhvien.setTen(txtTen.getText());
-            sinhvien.setNgay_sinh((Date) new Date(WIDTH));
+            System.out.println(dpBirth.getDate());
+            sinhvien.setNgay_sinh(ConvertDate(dpBirth));
             sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
             sinhvien.setEmail(txtEmail.getText());
             sinhvien.setSđt(txtSdt.getText());
             sinhvien.setDia_chi(txtAddress.getText());
             sinhvien.setGpa(new BigDecimal(txtGPA.getText()));
-            sinhvien.setId_lopbienche(cbGender.getSelectedIndex());
+            
+            MyComboBox item =(MyComboBox)cbLop.getSelectedItem();
+            sinhvien.setId_lopbienche(item.MaInt());
             
             int a = SinhVienDAO.create(sinhvien);
             if (a>0) {
@@ -303,14 +309,18 @@ public class SinhvienJFrame extends javax.swing.JFrame {
     private void updateData()  {
        try {
             //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
+            
+            
             sinhvien.setTen(txtTen.getText());
-            sinhvien.setNgay_sinh((Date) new Date(WIDTH));
+            sinhvien.setNgay_sinh(ConvertDate(dpBirth));        
             sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
             sinhvien.setEmail(txtEmail.getText());
             sinhvien.setSđt(txtSdt.getText());
             sinhvien.setDia_chi(txtAddress.getText());
             sinhvien.setGpa(new BigDecimal(txtGPA.getText()));
-            sinhvien.setId_lopbienche(cbGender.getSelectedIndex());
+            
+            MyComboBox item =(MyComboBox)cbLop.getSelectedItem();
+            sinhvien.setId_lopbienche(item.MaInt());
             
             int a = SinhVienDAO.update(sinhvien);
             if (a>0) {
@@ -326,20 +336,43 @@ public class SinhvienJFrame extends javax.swing.JFrame {
     private void loadDataUpdate() {
         txtId.setText(String.valueOf(sinhvien.getId()));
         txtTen.setText(String.valueOf(sinhvien.getTen()));
-        //dpBirth.set(String.valueOf(sinhvien.getId()));
+        dpBirth.setDate(sinhvien.getNgay_sinh());
         cbGender.setSelectedItem(sinhvien.getGioi_tinh());
         txtEmail.setText(String.valueOf(sinhvien.getEmail()));
         txtSdt.setText(String.valueOf(sinhvien.getSđt()));
         txtAddress.setText(String.valueOf(sinhvien.getDia_chi()));
         txtGPA.setText(String.valueOf(sinhvien.getGpa()));
-        cbLop.setSelectedItem(String.valueOf(sinhvien.getId_lopbienche()));
-
-
+        cbLop.setSelectedIndex(sinhvien.getId_lopbienche());
+    }
+   
+    private void loadCombobox() {
+        try {
+            
+            ArrayList<LopBienChe> list = LopBienCheDAO.list();
+            DefaultComboBoxModel cbLopModel = (DefaultComboBoxModel) cbLop.getModel();
+            
+            //cbLop.setPrototypeDisplayValue("id");
+            for (LopBienChe item : list) {
+                MyComboBox object = new MyComboBox(item.getId(), item.getTen_lop());
+                cbLopModel.addElement(object);
+                //cbLop.addItem(item);
+                
+            }
+        } catch(Exception e) {
+            
+        }
+    }
+    
+    public Date ConvertDate(JDateChooser JDate) {
+        java.util.Date utilDate = JDate.getDate();
+        long milliseconds = utilDate.getTime();  // Get milliseconds since the epoch
+        java.sql.Date sqlDate = new java.sql.Date(milliseconds);
+        return  sqlDate;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbGender;
-    private javax.swing.JComboBox<String> cbLop;
-    private org.jdatepicker.JDatePicker dpBirth;
+    private javax.swing.JComboBox<Object> cbLop;
+    private com.toedter.calendar.JDateChooser dpBirth;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -361,4 +394,6 @@ public class SinhvienJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
+
+    
 }

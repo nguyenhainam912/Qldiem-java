@@ -113,9 +113,6 @@
               <Dimension value="[125, 42]"/>
             </Property>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="L&#x1b0;u"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
@@ -142,15 +139,10 @@
                       <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel7" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                                      <Component id="txtId" min="-2" pref="178" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="txtTen" min="-2" pref="178" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel7" min="-2" pref="68" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="txtId" min="-2" pref="178" max="-2" attributes="0"/>
+                              <EmptySpace pref="74" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel1" min="-2" pref="68" max="-2" attributes="0"/>
@@ -179,40 +171,30 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel11" min="-2" pref="90" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <Component id="jLabel11" min="-2" pref="90" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="cbLop" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                              <Component id="dpBirth" min="-2" pref="178" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="cbLop" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" pref="349" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="cbGender" min="-2" pref="92" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="dpBirth" alignment="1" min="-2" pref="178" max="-2" attributes="0"/>
+                                          <Component id="txtTen" min="-2" pref="178" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                              <Component id="cbGender" min="-2" pref="92" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -239,8 +221,6 @@
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="jLabel5" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="dpBirth" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtAddress" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
@@ -250,11 +230,19 @@
                           <Component id="txtGPA" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbLop" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cbLop" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="2" attributes="0">
+                      <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtAddress" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabel9" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -280,8 +268,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtTen">
             </Component>
-            <Component class="org.jdatepicker.JDatePicker" name="dpBirth">
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -303,8 +289,8 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
                     <StringItem index="0" value="Nam"/>
-                    <StringItem index="1" value="N&#x1eef;"/>
-                    <StringItem index="2" value="Kh&#xe1;c"/>
+                    <StringItem index="1" value="Nu"/>
+                    <StringItem index="2" value="Khac"/>
                     <StringItem index="3" value=" "/>
                   </StringArray>
                 </Property>
@@ -371,8 +357,10 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="dpBirth">
             </Component>
           </SubComponents>
         </Container>
