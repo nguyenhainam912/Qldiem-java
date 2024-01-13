@@ -8,23 +8,10 @@ import controller.MyComboBox;
 import dao.LopBienCheDAO;
 import dao.SinhVienDAO;
 import design.SinhvienJPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
 import model.SinhVien;
 import model.LopBienChe;
 /**
@@ -283,7 +270,6 @@ public class SinhvienJFrame extends javax.swing.JFrame {
     private void insertData() {
         try {
             sinhvien.setTen(txtTen.getText());
-            System.out.println(dpBirth.getDate());
             sinhvien.setNgay_sinh(ConvertDate(dpBirth));
             sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
             sinhvien.setEmail(txtEmail.getText());
@@ -342,7 +328,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         txtSdt.setText(String.valueOf(sinhvien.getSđt()));
         txtAddress.setText(String.valueOf(sinhvien.getDia_chi()));
         txtGPA.setText(String.valueOf(sinhvien.getGpa()));
-        cbLop.setSelectedIndex(sinhvien.getId_lopbienche());
+        cbLop.setSelectedIndex(sinhvien.getId_lopbienche()-1);
     }
    
     private void loadCombobox() {

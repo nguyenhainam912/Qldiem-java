@@ -5,6 +5,7 @@
 package dao;
 
 import static dao.DAO.connect;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -20,12 +21,12 @@ public class BangDiemDAO {
      public static ArrayList<BangDiem> list() {
         ArrayList<BangDiem> list = new ArrayList<>();
 // 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_bangdiem"); ResultSet rs = ps.executeQuery()) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_bangdiem Order By id_sinhvien ASC"); ResultSet rs = ps.executeQuery()) {
             // lấy dữ liệu từ db -> add vào list 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                double diem_chuyen_can = rs.getDouble("diem_chuyen_can");
-                double diem_thi = rs.getDouble("diem_thi");
+                BigDecimal diem_chuyen_can = rs.getBigDecimal("diem_chuyen_can");
+                BigDecimal diem_thi = rs.getBigDecimal("diem_thi");
                 Date ngay_thi = rs.getDate("ngay_thi");
                 int id_sinhvien = rs.getInt("id_sinhvien");
                 int id_hocphan= rs.getInt("id_hocphan");
@@ -41,38 +42,49 @@ public class BangDiemDAO {
         return list;
     }
 
-    public static BangDiem find(int _id) {
+    public static ArrayList<BangDiem> find(int _id_sv, int _id_hp) {
+        ArrayList<BangDiem> list = new ArrayList<>();
         BangDiem item = null;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_bangdiem WHERE id = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_bangdiem WHERE id_sinhvien = ISNULL(?, id_sinhvien) And id_hocphan = ISNULL(?, id_hocphan)")) {
+            if(_id_sv == 0) {
+                ps.setNull(1, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(1, _id_sv);
 
-            ps.setInt(1, _id);
+            }
+            if(_id_hp == 0) {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            } else {
+               ps.setInt(2, _id_hp);
+            }
+
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
-                double diem_chuyen_can = rs.getDouble("diem_chuyen_can");
-                double diem_thi = rs.getDouble("diem_thi");
+                BigDecimal diem_chuyen_can = rs.getBigDecimal("diem_chuyen_can");
+                BigDecimal diem_thi = rs.getBigDecimal("diem_thi");
                 Date ngay_thi = rs.getDate("ngay_thi");
                 int id_sinhvien = rs.getInt("id_sinhvien");
                 int id_hocphan= rs.getInt("id_hocphan");
 
-
                 item = new BangDiem(id, diem_chuyen_can, diem_thi, ngay_thi, id_sinhvien, id_hocphan);
+                list.add(item);
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());
         }
-        return item;
+        return list;
     }
 
     public static int create(BangDiem item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO `tbl_bangdiem`(`diem_chuyen_can`, `diem_thi`, `ngay_thi`, `id_sinhvien`, `id_hocphan`) VALUES (?, ?, ?, ?, ?)")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_bangdiem(diem_chuyen_can, diem_thi, ngay_thi, id_sinhvien, id_hocphan) VALUES (?, ?, ?, ?, ?)")) {
 
-            ps.setDouble(1, item.getDiem_chuyen_can());
-            ps.setDouble(2, item.getDiem_thi());
+            ps.setBigDecimal(1, item.getDiem_chuyen_can());
+            ps.setBigDecimal(2, item.getDiem_thi());
             ps.setDate(3, item.getNgay_thi());
             ps.setInt(4, item.getId_sinhvien());
             ps.setInt(5, item.getId_hocphan());
@@ -87,9 +99,9 @@ public class BangDiemDAO {
     public static int update(BangDiem item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE `tbl_bangdiem` SET `diem_chuyen_can`=?,`diem_thi`=?,`ngay_thi`=?,`id_sinhvien`=?,`id_hocphan`=? WHERE `id` = ?")) {
-            ps.setDouble(1, item.getDiem_chuyen_can());
-            ps.setDouble(2, item.getDiem_thi());
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE tbl_bangdiem SET diem_chuyen_can=?,diem_thi=?,ngay_thi=?,id_sinhvien=?,id_hocphan=? WHERE id = ?")) {
+            ps.setBigDecimal(1, item.getDiem_chuyen_can());
+            ps.setBigDecimal(2, item.getDiem_thi());
             ps.setDate(3, item.getNgay_thi());
             ps.setInt(4, item.getId_sinhvien());
             ps.setInt(5, item.getId_hocphan());
@@ -104,7 +116,7 @@ public class BangDiemDAO {
     public static int delete(int id) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM `tbl_bangdiem` WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_bangdiem WHERE id = ?")) {
 
             ps.setInt(1, id);
 

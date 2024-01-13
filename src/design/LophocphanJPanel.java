@@ -4,6 +4,18 @@
  */
 package design;
 
+import dao.LopHocPhanDAO;
+import design.popup.LophocphanJFrame;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import model.LopHocPhan;
+import java.sql.Date;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 /**
  *
  * @author nguye
@@ -13,8 +25,73 @@ public class LophocphanJPanel extends javax.swing.JPanel {
     /**
      * Creates new form TrangChuJPanel
      */
+    private LophocphanJPanel lophocphanJPanel = this;
     public LophocphanJPanel() {
         initComponents();
+        
+        tbLophocphan.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Lấy số hàng đã được nhấp
+                if (e.getClickCount() == 2) {
+                    int row = tbLophocphan.getSelectedRow();
+                    LopHocPhan lopHocPhan = new LopHocPhan();
+                    lopHocPhan.setId((int) tbLophocphan.getValueAt(row, 0));
+                    lopHocPhan.setTen((String) tbLophocphan.getValueAt(row, 1));
+                    lopHocPhan.setId_hocphan((int)tbLophocphan.getValueAt(row, 2));
+                    lopHocPhan.setId_giangvien((int)tbLophocphan.getValueAt(row, 3));
+                    lopHocPhan.setNgay_bat_dau((Date) tbLophocphan.getValueAt(row, 4));
+                    lopHocPhan.setNgay_bat_dau((Date) tbLophocphan.getValueAt(row, 5));
+                    lopHocPhan.setNgay_bat_dau((Date) tbLophocphan.getValueAt(row, 6));
+
+                    LophocphanJFrame frame = new LophocphanJFrame(lophocphanJPanel, lopHocPhan, true);
+                    frame.setTitle("Sửa thông tin");
+                
+                    frame.setVisible(true);
+                }
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+
+            
+        });
+        
+        JTableHeader thead = tbLophocphan.getTableHeader();
+        
+        thead.setFont(new Font("Segoe", Font.ITALIC,16));
+        thead.setBackground(new Color(200,255,255));
+        loaddata();
+    }
+    
+    public void loaddata() {
+        
+        try {
+            DefaultTableModel model = (DefaultTableModel) tbLophocphan.getModel();
+            model.setRowCount(0);
+            ArrayList<LopHocPhan> list = LopHocPhanDAO.list();
+            for (LopHocPhan item : list) {
+                model.addRow(new Object[]{item.getId(), item.getTen(), item.getId_hocphan(),
+                    item.getId_giangvien(), item.getNgay_bat_dau(), item.getNgay_ket_thuc(), item.getNgay_thi()
+                    });
+            }
+        } catch (Exception e ) {
+            
+        }
     }
 
     /**
@@ -27,29 +104,107 @@ public class LophocphanJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbLophocphan = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(500, 500));
 
-        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
+        jPanel1.setBackground(new java.awt.Color(230, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 680));
 
-        jLabel1.setText("lop hoc phan");
+        jButton1.setBackground(new java.awt.Color(122, 122, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        tbLophocphan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tbLophocphan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã Lớp", "Tên Lớp", "Mã Học Phần", "Mã Giáo Viên", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Ngày Thi"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbLophocphan.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tbLophocphan.setGridColor(new java.awt.Color(0, 0, 153));
+        tbLophocphan.setPreferredSize(new java.awt.Dimension(980, 600));
+        tbLophocphan.setRequestFocusEnabled(false);
+        tbLophocphan.setRowHeight(30);
+        tbLophocphan.setRowMargin(10);
+        tbLophocphan.setSelectionBackground(new java.awt.Color(255, 153, 153));
+        tbLophocphan.setSelectionForeground(new java.awt.Color(255, 0, 51));
+        tbLophocphan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbLophocphan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbLophocphan.setShowGrid(true);
+        tbLophocphan.setSurrendersFocusOnKeystroke(true);
+        jScrollPane1.setViewportView(tbLophocphan);
+
+        jButton2.setBackground(new java.awt.Color(112, 112, 255));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Xóa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel1)
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addContainerGap(634, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -64,9 +219,43 @@ public class LophocphanJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        LopHocPhan lopHocPhan = new LopHocPhan();
+        LophocphanJFrame frame = new LophocphanJFrame(lophocphanJPanel,lopHocPhan, false);
+        frame.setTitle("Thêm Lớp Hoc Phần");
+        frame.setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int selectedRowIndex = tbLophocphan.getSelectedRow();
+
+        if (selectedRowIndex != -1) {
+            // Lấy giá trị của cột CID từ dòng được chọn
+            int id = (int) tbLophocphan.getValueAt(selectedRowIndex, 0);
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn xoa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                int a = LopHocPhanDAO.delete(id);
+                if(a>0) {
+                    loaddata();
+                }
+            }
+        } else {
+            System.out.println("Vui lòng chọn một dòng để xóa!");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbLophocphan;
     // End of variables declaration//GEN-END:variables
 }

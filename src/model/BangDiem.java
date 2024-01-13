@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -13,8 +14,8 @@ import java.sql.Date;
 public class BangDiem {
 
     private int id;
-    private double diem_chuyen_can;
-    private double diem_thi;
+    private BigDecimal diem_chuyen_can;
+    private BigDecimal diem_thi;
     private Date ngay_thi;
     private int id_sinhvien;
     private int id_hocphan;
@@ -22,7 +23,7 @@ public class BangDiem {
     public BangDiem() {
     }
 
-    public BangDiem(int id, double diem_chuyen_can, double diem_thi, Date ngay_thi, int id_sinhvien, int id_hocphan) {
+    public BangDiem(int id, BigDecimal diem_chuyen_can, BigDecimal diem_thi, Date ngay_thi, int id_sinhvien, int id_hocphan) {
         this.id = id;
         this.diem_chuyen_can = diem_chuyen_can;
         this.diem_thi = diem_thi;
@@ -39,19 +40,19 @@ public class BangDiem {
         this.id = id;
     }
 
-    public double getDiem_chuyen_can() {
+    public BigDecimal getDiem_chuyen_can() {
         return diem_chuyen_can;
     }
 
-    public void setDiem_chuyen_can(double diem_chuyen_can) {
+    public void setDiem_chuyen_can(BigDecimal diem_chuyen_can) {
         this.diem_chuyen_can = diem_chuyen_can;
     }
 
-    public double getDiem_thi() {
+    public BigDecimal getDiem_thi() {
         return diem_thi;
     }
 
-    public void setDiem_thi(double diem_thi) {
+    public void setDiem_thi(BigDecimal diem_thi) {
         this.diem_thi = diem_thi;
     }
 

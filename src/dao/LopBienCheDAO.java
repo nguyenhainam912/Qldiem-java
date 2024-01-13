@@ -52,7 +52,7 @@ public class LopBienCheDAO extends DAO {
      public static int create(LopBienChe item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO `tbl_lopbienche`( `ten_lop`, `id_giangvien`) VALUES (?, ?)")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_lopbienche( ten_lop, id_giangvien) VALUES (?, ?)")) {
 
             ps.setString(1, item.getTen_lop());
             ps.setInt(2, item.getId_giangvien());
@@ -67,7 +67,7 @@ public class LopBienCheDAO extends DAO {
     public static int update(LopBienChe item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE `tbl_lopbienche` SET `ten_lop`=?,`id_giangvien`=? WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE tbl_lopbienche SET ten_lop=?,id_giangvien=? WHERE id = ?")) {
             ps.setString(1, item.getTen_lop());
             ps.setInt(2, item.getId_giangvien());
 //            ps.setInt(3, item.getId());
@@ -81,7 +81,7 @@ public class LopBienCheDAO extends DAO {
     public static int delete(int id) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM `tbl_lopbienche` WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_lopbienche WHERE id = ?")) {
 
             ps.setInt(1, id);
 

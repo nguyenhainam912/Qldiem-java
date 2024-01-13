@@ -14,6 +14,7 @@ public class LopHocPhan {
     private int id;
     private String ten;
     private int id_giangvien;
+    private int id_hocphan;
     private Date ngay_bat_dau;
     private Date ngay_ket_thuc;
     private Date ngay_thi;
@@ -21,10 +22,11 @@ public class LopHocPhan {
     public LopHocPhan() {
     }
 
-    public LopHocPhan(int id, String ten, int id_giangvien, Date ngay_bat_dau, Date ngay_ket_thuc, Date ngay_thi) {
+    public LopHocPhan(int id, String ten, int id_giangvien,int id_hocphan, Date ngay_bat_dau, Date ngay_ket_thuc, Date ngay_thi) {
         this.id = id;
         this.ten = ten;
         this.id_giangvien = id_giangvien;
+        this.id_hocphan = id_hocphan;
         this.ngay_bat_dau = ngay_bat_dau;
         this.ngay_ket_thuc = ngay_ket_thuc;
         this.ngay_thi = ngay_thi;
@@ -52,6 +54,14 @@ public class LopHocPhan {
 
     public void setId_giangvien(int id_giangvien) {
         this.id_giangvien = id_giangvien;
+    }
+    
+    public int getId_hocphan() {
+        return id_hocphan;
+    }
+
+    public void setId_hocphan(int id_hocphan) {
+        this.id_hocphan = id_hocphan;
     }
 
     public Date getNgay_bat_dau() {
