@@ -31,7 +31,7 @@ public class HocPhanDAO extends DAO{
     public static HocPhan find(int _id) {
         HocPhan item = null;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM `tbl_hocphan` WHERE id = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_hocphan WHERE id = ?")) {
 
             ps.setInt(1, _id);
             ResultSet rs = ps.executeQuery();
@@ -52,7 +52,7 @@ public class HocPhanDAO extends DAO{
     public static int create(HocPhan item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO `tbl_hocphan`(`ten_hocphan`, `so_tin_chi`) VALUES (?, ?)")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_hocphan(ten_hocphan, so_tin_chi) VALUES (?, ?)")) {
 
             ps.setString(1, item.getTen_hocphan());
             ps.setInt(2, item.getSo_tin_chi());
@@ -67,7 +67,7 @@ public class HocPhanDAO extends DAO{
     public static int update(HocPhan item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE `tbl_hocphan` SET `ten_hocphan`=?,`so_tin_chi`=? WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE tbl_hocphan SET ten_hocphan=?,so_tin_chi=? WHERE id = ?")) {
 
             ps.setString(1, item.getTen_hocphan());
             ps.setInt(2, item.getSo_tin_chi());
@@ -83,7 +83,7 @@ public class HocPhanDAO extends DAO{
     public static int delete(int id) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM `tbl_hocphan` WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_hocphan WHERE id= ?")) {
 
             ps.setInt(1, id);
 

@@ -4,6 +4,7 @@
  */
 package design.popup;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import controller.MyComboBox;
 import dao.GiangVienDAO;
 import dao.HocPhanDAO;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import model.HocPhan;
 import model.GiangVien;
 import model.LopHocPhan;
@@ -37,6 +39,12 @@ public class LophocphanJFrame extends javax.swing.JFrame {
         this.lopHocPhan = lopHocPhan;
         this.isUpdate = isUpdate;
         loadCombobox();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) dpStart.getDateEditor();
+        editor.setEditable(false);
+        JTextFieldDateEditor editor1 = (JTextFieldDateEditor) dpEnd.getDateEditor();
+        editor1.setEditable(false);
+        JTextFieldDateEditor editor2 = (JTextFieldDateEditor) dpThi.getDateEditor();
+        editor2.setEditable(false);
         if (isUpdate ) {
             loadDataUpdate();
         }
@@ -250,12 +258,13 @@ public class LophocphanJFrame extends javax.swing.JFrame {
             lopHocPhan.setId_giangvien(item1.MaInt());
             
             lopHocPhan.setNgay_bat_dau(ConvertDate(dpStart));
-            lopHocPhan.setNgay_bat_dau(ConvertDate(dpEnd));
-            lopHocPhan.setNgay_bat_dau(ConvertDate(dpThi));
+            lopHocPhan.setNgay_ket_thuc(ConvertDate(dpEnd));
+            lopHocPhan.setNgay_thi(ConvertDate(dpThi));
             
             int a = LopHocPhanDAO.create(lopHocPhan);
             if (a>0) {
-                System.out.println("Cập nhật thông tin Sinh vien thành công!");
+                JOptionPane.showMessageDialog(this, "Thêm thông tin lớp học phần thành công");
+                System.out.println("Thêm thông tin lớp học phần thành công!");
                 lophocphanJPanel.loaddata();
                 this.dispose();
             }
@@ -277,13 +286,14 @@ public class LophocphanJFrame extends javax.swing.JFrame {
             lopHocPhan.setId_giangvien(item1.MaInt());
             
             lopHocPhan.setNgay_bat_dau(ConvertDate(dpStart));
-            lopHocPhan.setNgay_bat_dau(ConvertDate(dpEnd));
-            lopHocPhan.setNgay_bat_dau(ConvertDate(dpThi));
+            lopHocPhan.setNgay_ket_thuc(ConvertDate(dpEnd));
+            lopHocPhan.setNgay_thi(ConvertDate(dpThi));
             
             int a = LopHocPhanDAO.update(lopHocPhan);
 
             if (a>0) {
-                System.out.println("Cập nhật thông tin Sinh vien thành công!");
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin lớp học phần thành công");
+                System.out.println("Cập nhật thông tin lớp học phần thành công");
                 lophocphanJPanel.loaddata();
                 this.dispose();
             }
@@ -296,8 +306,8 @@ public class LophocphanJFrame extends javax.swing.JFrame {
         txtId.setText(String.valueOf(lopHocPhan.getId()));
         txtTen.setText(String.valueOf(lopHocPhan.getTen()));
         dpStart.setDate(lopHocPhan.getNgay_bat_dau());
-        dpStart.setDate(lopHocPhan.getNgay_ket_thuc());
-        dpStart.setDate(lopHocPhan.getNgay_thi());
+        dpEnd.setDate(lopHocPhan.getNgay_ket_thuc());
+        dpThi.setDate(lopHocPhan.getNgay_thi());
 
         cbHp.setSelectedIndex(lopHocPhan.getId_hocphan()-1);
         cbGv.setSelectedIndex(lopHocPhan.getId_giangvien()-1);

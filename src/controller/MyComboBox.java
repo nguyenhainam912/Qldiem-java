@@ -27,7 +27,7 @@ public class MyComboBox {
     
     @Override
     public String toString() {
-        return text.toString();
+        return value.toString() + " - " +text.toString();
     }
     
     

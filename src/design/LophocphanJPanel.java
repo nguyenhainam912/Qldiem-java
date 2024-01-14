@@ -41,8 +41,8 @@ public class LophocphanJPanel extends javax.swing.JPanel {
                     lopHocPhan.setId_hocphan((int)tbLophocphan.getValueAt(row, 2));
                     lopHocPhan.setId_giangvien((int)tbLophocphan.getValueAt(row, 3));
                     lopHocPhan.setNgay_bat_dau((Date) tbLophocphan.getValueAt(row, 4));
-                    lopHocPhan.setNgay_bat_dau((Date) tbLophocphan.getValueAt(row, 5));
-                    lopHocPhan.setNgay_bat_dau((Date) tbLophocphan.getValueAt(row, 6));
+                    lopHocPhan.setNgay_ket_thuc((Date) tbLophocphan.getValueAt(row, 5));
+                    lopHocPhan.setNgay_thi((Date) tbLophocphan.getValueAt(row, 6));
 
                     LophocphanJFrame frame = new LophocphanJFrame(lophocphanJPanel, lopHocPhan, true);
                     frame.setTitle("Sửa thông tin");

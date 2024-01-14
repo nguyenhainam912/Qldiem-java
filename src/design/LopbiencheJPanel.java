@@ -214,7 +214,7 @@ public class LopbiencheJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         LopBienChe lopBienChe = new LopBienChe();
         LopbiencheJFrame frame = new LopbiencheJFrame(lopbiencheJPanel,lopBienChe, false);
-        frame.setTitle("Thêm Sinh Viên");
+        frame.setTitle("Thêm Lớp Biên Chế");
         frame.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed

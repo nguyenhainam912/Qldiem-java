@@ -5,6 +5,7 @@
 package design.popup;
 import dao.HocPhanDAO;
 import design.HocphanJPanel;
+import javax.swing.JOptionPane;
 import model.HocPhan;
 /**
  *
@@ -45,7 +46,7 @@ public class HocphanJFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        cbTinchi = new javax.swing.JComboBox<>();
+        cbTinchi = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -81,7 +82,7 @@ public class HocphanJFrame extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Số tín chỉ ");
 
-        cbTinchi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "10", " " }));
+        cbTinchi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "10" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -179,11 +180,12 @@ public class HocphanJFrame extends javax.swing.JFrame {
     private void insertData() {
         try {
             hocPhan.setTen_hocphan(txtTen.getText());
-            hocPhan.setSo_tin_chi((int) cbTinchi.getSelectedItem());
+            hocPhan.setSo_tin_chi((Integer.parseInt((String) cbTinchi.getSelectedItem())));
             
             int a = HocPhanDAO.create(hocPhan);
             if (a>0) {
-                System.out.println("Cập nhật thông tin Sinh vien thành công!");
+                JOptionPane.showMessageDialog(this, "Thêm thông tin học phần thành công");
+                System.out.println("Thêm thông tin học phần thành công");
                 hocphanJPanel.loaddata();
                 this.dispose();
             }
@@ -199,11 +201,12 @@ public class HocphanJFrame extends javax.swing.JFrame {
             
             
             hocPhan.setTen_hocphan(txtTen.getText());
-            hocPhan.setSo_tin_chi((int) cbTinchi.getSelectedItem());
+            hocPhan.setSo_tin_chi((Integer.parseInt((String) cbTinchi.getSelectedItem())));
             
             int a = HocPhanDAO.update(hocPhan);
             if (a>0) {
-                System.out.println("Cập nhật thông tin Sinh vien thành công!");
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin học phần thành công");
+                System.out.println("Cập nhật thông tin học phần thành công!");
                 hocphanJPanel.loaddata();
                 this.dispose();
             }
@@ -215,13 +218,13 @@ public class HocphanJFrame extends javax.swing.JFrame {
     private void loadDataUpdate() {
         txtId.setText(String.valueOf(hocPhan.getId()));
         txtTen.setText(String.valueOf(hocPhan.getTen_hocphan()));
-        cbTinchi.setSelectedItem(hocPhan.getSo_tin_chi());
+        cbTinchi.setSelectedItem(String.valueOf(hocPhan.getSo_tin_chi()));
         
     }
    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbTinchi;
+    private javax.swing.JComboBox cbTinchi;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

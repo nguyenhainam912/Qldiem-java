@@ -4,30 +4,33 @@
  */
 package design.popup;
 import controller.MyComboBox;
-import dao.GiangVienDAO;
-import dao.LopBienCheDAO;
-import design.LopbiencheJPanel;
+import dao.LopHocPhanDAO;
+import dao.LophocphanSinhvienDAO;
+import dao.SinhVienDAO;
+import design.ChitietlophocphanJPanel;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import model.GiangVien;
-import model.LopBienChe;
+import model.LophocphanSinhvien;
+import model.SinhVien;
+import model.LopHocPhan;
+
 /**
  *
  * @author nguye
  */
-public class LopbiencheJFrame extends javax.swing.JFrame {
+public class ChitietlophocphanJFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form SinhvienJFrame
      */
-    private LopbiencheJPanel lopbiencheJPanel;
-    private LopBienChe lopBienChe;
+    private ChitietlophocphanJPanel chitietlophocphanJPanel;
+    private LophocphanSinhvien lophocphanSinhvien;
     private Boolean isUpdate ;
-    public LopbiencheJFrame(LopbiencheJPanel lopbiencheJPanel, LopBienChe lopBienChe, Boolean isUpdate) {
+    public ChitietlophocphanJFrame(ChitietlophocphanJPanel chitietlophocphanJPanel, LophocphanSinhvien lophocphanSinhvien, Boolean isUpdate) {
         initComponents();
-        this.lopbiencheJPanel = lopbiencheJPanel;
-        this.lopBienChe = lopBienChe;
+        this.chitietlophocphanJPanel = chitietlophocphanJPanel;
+        this.lophocphanSinhvien = lophocphanSinhvien;
         this.isUpdate = isUpdate;
         loadCombobox();
         if (isUpdate ) {
@@ -47,12 +50,12 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtTen = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        cbGiangvien = new javax.swing.JComboBox<>();
+        cbSV = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        cbLHP = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -75,18 +78,18 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
         });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lớp Biên Chế", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(255, 0, 0))); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Tên Lớp");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chi tiết lớp học phần", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(255, 0, 0))); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Mã Lớp");
+        jLabel7.setText("Mã ");
 
         txtId.setEnabled(false);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setText("Giảng Viên");
+        jLabel11.setText("Sinh  Viên");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setText("Lớp Học Phần");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -95,15 +98,15 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                    .addComponent(txtTen, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                    .addComponent(cbGiangvien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSV, 0, 187, Short.MAX_VALUE)
+                    .addComponent(cbLHP, 0, 187, Short.MAX_VALUE))
+                .addGap(353, 353, 353))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,15 +115,15 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel7)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel11)
-                    .addComponent(cbGiangvien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(109, 109, 109))
+                    .addComponent(cbSV, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel12)
+                    .addComponent(cbLHP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -179,16 +182,18 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
-            lopBienChe.setTen_lop(txtTen.getText());
             
-            MyComboBox item =(MyComboBox)cbGiangvien.getSelectedItem();
-            lopBienChe.setId_giangvien(item.MaInt());
+            MyComboBox item =(MyComboBox)cbSV.getSelectedItem();
+            lophocphanSinhvien.setId_sinhvien(item.MaInt());
             
-            int a = LopBienCheDAO.create(lopBienChe);
+            MyComboBox item1 =(MyComboBox)cbLHP.getSelectedItem();
+            lophocphanSinhvien.setId_lophocphan(item1.MaInt());
+            
+            int a = LophocphanSinhvienDAO.create(lophocphanSinhvien);
             if (a>0) {
-                JOptionPane.showMessageDialog(this, "Thêm thông tin lớp biên chế thành công");
-                System.out.println("Thêm thông tin lớp biên chế thành công");
-                lopbiencheJPanel.loaddata();
+                JOptionPane.showMessageDialog(this, "Thêm thông tin chi tiết lớp học thành công");
+                System.out.println("Cập nhật thông tin Chi tiết lớp học thành công!");
+                chitietlophocphanJPanel.loaddata();
                 this.dispose();
             }
         }catch (Exception e) {
@@ -199,16 +204,19 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
 
     private void updateData()  {
        try {
-            lopBienChe.setTen_lop(txtTen.getText());
+            //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
             
-            MyComboBox item =(MyComboBox)cbGiangvien.getSelectedItem();
-            lopBienChe.setId_giangvien(item.MaInt());
+            MyComboBox item =(MyComboBox)cbSV.getSelectedItem();
+            lophocphanSinhvien.setId_sinhvien(item.MaInt());
             
-            int a = LopBienCheDAO.update(lopBienChe);
+            MyComboBox item1 =(MyComboBox)cbLHP.getSelectedItem();
+            lophocphanSinhvien.setId_lophocphan(item1.MaInt());
+            
+            int a = LophocphanSinhvienDAO.update(lophocphanSinhvien);
             if (a>0) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thông tin lớp biên chế thành công");
-                System.out.println("Cập nhật thông tin lớp biên chế thành công");
-                lopbiencheJPanel.loaddata();
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin chi tiết lớp học thành công");
+                System.out.println("Cập nhật thông tin chi tiết lớp học thành công!");
+                chitietlophocphanJPanel.loaddata();
                 this.dispose();
             }
         }catch (Exception e) {
@@ -217,41 +225,48 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
     }
     
     private void loadDataUpdate() {
-        txtId.setText(String.valueOf(lopBienChe.getId()));
-        txtTen.setText(String.valueOf(lopBienChe.getTen_lop()));
-        cbGiangvien.setSelectedIndex(lopBienChe.getId_giangvien()-1);
+        txtId.setText(String.valueOf(lophocphanSinhvien.getId()));
+        
+        cbSV.setSelectedIndex(lophocphanSinhvien.getId_sinhvien()-1);
+        cbLHP.setSelectedIndex(lophocphanSinhvien.getId_lophocphan()-1);
+
     }
    
     private void loadCombobox() {
         try {
+            ArrayList<SinhVien> list = SinhVienDAO.list();
+            DefaultComboBoxModel cbSvModel = (DefaultComboBoxModel) cbSV.getModel();
             
-            ArrayList<GiangVien> list = GiangVienDAO.list();
-            DefaultComboBoxModel cbModel = (DefaultComboBoxModel) cbGiangvien.getModel();
-            
-            //cbLop.setPrototypeDisplayValue("id");
-            for (GiangVien item : list) {
+            for (SinhVien item : list) {
                 MyComboBox object = new MyComboBox(item.getId(), item.getTen());
-                cbModel.addElement(object);
-                //cbLop.addItem(item);
-                
+                cbSvModel.addElement(object);
+            }
+            
+            ArrayList<LopHocPhan> list1 = LopHocPhanDAO.list();
+            DefaultComboBoxModel cbLHPModel = (DefaultComboBoxModel) cbLHP.getModel();
+            
+            for (LopHocPhan item : list1) {
+                MyComboBox object = new MyComboBox(item.getId(), item.getTen());
+                cbLHPModel.addElement(object);
             }
         } catch(Exception e) {
             
         }
     }
     
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Object> cbGiangvien;
+    private javax.swing.JComboBox<Object> cbLHP;
+    private javax.swing.JComboBox<Object> cbSV;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
 
     

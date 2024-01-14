@@ -70,7 +70,7 @@ public class LopBienCheDAO extends DAO {
         try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE tbl_lopbienche SET ten_lop=?,id_giangvien=? WHERE id = ?")) {
             ps.setString(1, item.getTen_lop());
             ps.setInt(2, item.getId_giangvien());
-//            ps.setInt(3, item.getId());
+            ps.setInt(3, item.getId());
             rows = ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());

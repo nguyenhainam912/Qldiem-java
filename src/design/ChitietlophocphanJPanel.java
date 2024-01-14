@@ -4,6 +4,17 @@
  */
 package design;
 
+import dao.LophocphanSinhvienDAO;
+import design.popup.ChitietlophocphanJFrame;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import model.LophocphanSinhvien;
 /**
  *
  * @author nguye
@@ -13,8 +24,67 @@ public class ChitietlophocphanJPanel extends javax.swing.JPanel {
     /**
      * Creates new form TrangChuJPanel
      */
+    private ChitietlophocphanJPanel chitietlophocphanJPanel = this;
     public ChitietlophocphanJPanel() {
         initComponents();
+        
+        tbCTLHP.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Lấy số hàng đã được nhấp
+                if (e.getClickCount() == 2) {
+                    int row = tbCTLHP.getSelectedRow();
+                    LophocphanSinhvien lophocphanSinhvien = new LophocphanSinhvien();
+                    lophocphanSinhvien.setId((int) tbCTLHP.getValueAt(row, 0));
+                    lophocphanSinhvien.setId_sinhvien((int)tbCTLHP.getValueAt(row, 1));
+                    lophocphanSinhvien.setId_lophocphan((int)tbCTLHP.getValueAt(row, 2));
+                    ChitietlophocphanJFrame frame = new ChitietlophocphanJFrame(chitietlophocphanJPanel, lophocphanSinhvien, true);
+                    frame.setTitle("Sửa thông tin");
+                
+                    frame.setVisible(true);
+                }
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+
+            
+        });
+        
+        JTableHeader thead = tbCTLHP.getTableHeader();
+        
+        thead.setFont(new Font("Segoe", Font.ITALIC,16));
+        thead.setBackground(new Color(200,255,255));
+        loaddata();
+    }
+    
+    public void loaddata() {
+        
+        try {
+            DefaultTableModel model = (DefaultTableModel) tbCTLHP.getModel();
+            model.setRowCount(0);
+            ArrayList<LophocphanSinhvien> list = LophocphanSinhvienDAO.list();
+            for (LophocphanSinhvien item : list) {
+                model.addRow(new Object[]{item.getId(), item.getId_sinhvien(), item.getId_lophocphan()
+                    });
+            }
+        } catch (Exception e ) {
+            
+        }
     }
 
     /**
@@ -27,29 +97,107 @@ public class ChitietlophocphanJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbCTLHP = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(500, 500));
 
-        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
+        jPanel1.setBackground(new java.awt.Color(230, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 680));
 
-        jLabel1.setText("Chi tiet lop hoc phan");
+        jButton1.setBackground(new java.awt.Color(122, 122, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        tbCTLHP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tbCTLHP.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Mã ", "Mã Sinh Viên", "Mã Lớp Học Phần"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbCTLHP.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tbCTLHP.setGridColor(new java.awt.Color(0, 0, 153));
+        tbCTLHP.setPreferredSize(new java.awt.Dimension(980, 600));
+        tbCTLHP.setRequestFocusEnabled(false);
+        tbCTLHP.setRowHeight(30);
+        tbCTLHP.setRowMargin(10);
+        tbCTLHP.setSelectionBackground(new java.awt.Color(255, 153, 153));
+        tbCTLHP.setSelectionForeground(new java.awt.Color(255, 0, 51));
+        tbCTLHP.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbCTLHP.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbCTLHP.setShowGrid(true);
+        tbCTLHP.setSurrendersFocusOnKeystroke(true);
+        jScrollPane1.setViewportView(tbCTLHP);
+
+        jButton2.setBackground(new java.awt.Color(112, 112, 255));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Xóa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel1)
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addContainerGap(634, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -64,9 +212,43 @@ public class ChitietlophocphanJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        LophocphanSinhvien lophocphanSinhvien = new LophocphanSinhvien();
+        ChitietlophocphanJFrame frame = new ChitietlophocphanJFrame(chitietlophocphanJPanel,lophocphanSinhvien, false);
+        frame.setTitle("Thêm Chi Tiết Lớp Học Phần");
+        frame.setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int selectedRowIndex = tbCTLHP.getSelectedRow();
+
+        if (selectedRowIndex != -1) {
+            // Lấy giá trị của cột CID từ dòng được chọn
+            int id = (int) tbCTLHP.getValueAt(selectedRowIndex, 0);
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn xoa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                int a = LophocphanSinhvienDAO.delete(id);
+                if(a>0) {
+                    loaddata();
+                }
+            }
+        } else {
+            System.out.println("Vui lòng chọn một dòng để xóa!");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbCTLHP;
     // End of variables declaration//GEN-END:variables
 }

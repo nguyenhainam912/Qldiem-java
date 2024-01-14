@@ -18,12 +18,13 @@ public class LopHocPhanDAO extends DAO {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String ten = rs.getString("ten");
+                int id_hocphan = rs.getInt("id_hocphan");
                 int id_giangvien = rs.getInt("id_giangvien");
                 Date ngay_bat_dau = rs.getDate("ngay_bat_dau");
                 Date ngay_ket_thuc = rs.getDate("ngay_ket_thuc");
                 Date ngay_thi = rs.getDate("ngay_thi");
 
-                LopHocPhan item = new LopHocPhan(id, ten, id_giangvien, ngay_bat_dau, ngay_ket_thuc, ngay_thi);
+                LopHocPhan item = new LopHocPhan(id, ten,id_hocphan, id_giangvien, ngay_bat_dau, ngay_ket_thuc, ngay_thi);
                 list.add(item);
             }
         } catch (SQLException ex) {
@@ -43,12 +44,13 @@ public class LopHocPhanDAO extends DAO {
             if (rs.next()) {
                 int id = rs.getInt("id");
                 String ten = rs.getString("ten");
+                int id_hocphan = rs.getInt("id_hocphan");
                 int id_giangvien = rs.getInt("id_giangvien");
                 Date ngay_bat_dau = rs.getDate("ngay_bat_dau");
                 Date ngay_ket_thuc = rs.getDate("ngay_ket_thuc");
                 Date ngay_thi = rs.getDate("ngay_thi");
 
-                item = new LopHocPhan(id, ten, id_giangvien, ngay_bat_dau, ngay_ket_thuc, ngay_thi);
+                item = new LopHocPhan(id, ten,id_hocphan, id_giangvien, ngay_bat_dau, ngay_ket_thuc, ngay_thi);
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());
@@ -59,13 +61,14 @@ public class LopHocPhanDAO extends DAO {
     public static int create(LopHocPhan item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO `tbl_lophocphan`( `ten`, `id_giangvien`, `ngay_bat_dau`, `ngay_ket_thuc`, `ngay_thi`) VALUES (?, ?, ?, ?, ?)")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_lophocphan( ten,id_hocphan, id_giangvien, ngay_bat_dau, ngay_ket_thuc, ngay_thi) VALUES (?, ?, ?, ?, ?, ?)")) {
 
             ps.setString(1, item.getTen());
-            ps.setInt(2, item.getId_giangvien());
-            ps.setDate(3, item.getNgay_bat_dau());
-            ps.setDate(4, item.getNgay_ket_thuc());
-            ps.setDate(5, item.getNgay_thi());
+            ps.setInt(2, item.getId_hocphan());
+            ps.setInt(3, item.getId_giangvien());
+            ps.setDate(4, item.getNgay_bat_dau());
+            ps.setDate(5, item.getNgay_ket_thuc());
+            ps.setDate(6, item.getNgay_thi());
 
             rows = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -77,13 +80,14 @@ public class LopHocPhanDAO extends DAO {
     public static int update(LopHocPhan item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE `tbl_lophocphan` SET `ten`=?,`id_giangvien`=?,`ngay_bat_dau`=?,`ngay_ket_thuc`=?,`ngay_thi`=? WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE tbl_lophocphan SET ten=?,id_hocphan=?,id_giangvien=?,ngay_bat_dau=?,ngay_ket_thuc=?,ngay_thi=? WHERE id = ?")) {
             ps.setString(1, item.getTen());
-            ps.setInt(2, item.getId_giangvien());
-            ps.setDate(3, item.getNgay_bat_dau());
-            ps.setDate(4, item.getNgay_ket_thuc());
-            ps.setDate(5, item.getNgay_thi());
-            ps.setInt(6, item.getId());
+            ps.setInt(2, item.getId_hocphan());
+            ps.setInt(3, item.getId_giangvien());
+            ps.setDate(4, item.getNgay_bat_dau());
+            ps.setDate(5, item.getNgay_ket_thuc());
+            ps.setDate(6, item.getNgay_thi());
+            ps.setInt(7, item.getId());
             rows = ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());
@@ -94,7 +98,7 @@ public class LopHocPhanDAO extends DAO {
     public static int delete(int id) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM `tbl_lophocphan` WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_lophocphan WHERE id = ?")) {
 
             ps.setInt(1, id);
 

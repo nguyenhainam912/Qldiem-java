@@ -4,38 +4,28 @@
  */
 package design.popup;
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JTextFieldDateEditor;
-import controller.MyComboBox;
-import dao.LopBienCheDAO;
-import dao.SinhVienDAO;
-import design.SinhvienJPanel;
-import java.math.BigDecimal;
+import dao.GiangVienDAO;
+import design.GiangvienJPanel;
 import java.sql.Date;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import model.SinhVien;
-import model.LopBienChe;
+import model.GiangVien;
 /**
  *
  * @author nguye
  */
-public class SinhvienJFrame extends javax.swing.JFrame {
+public class GiangvienJFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form SinhvienJFrame
      */
-    private SinhvienJPanel sinhvienJPanel;
-    private SinhVien sinhvien;
+    private GiangvienJPanel giangvienJPanel;
+    private GiangVien giangVien;
     private Boolean isUpdate ;
-    public SinhvienJFrame(SinhvienJPanel sinhvienJPanel, SinhVien sinhvien, Boolean isUpdate) {
+    public GiangvienJFrame(GiangvienJPanel giangvienJPanel, GiangVien giangVien, Boolean isUpdate) {
         initComponents();
-        this.sinhvienJPanel = sinhvienJPanel;
-        this.sinhvien = sinhvien;
+        this.giangvienJPanel = giangvienJPanel;
+        this.giangVien = giangVien;
         this.isUpdate = isUpdate;
-        loadCombobox();
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) dpBirth.getDateEditor();
-        editor.setEditable(false);
         if (isUpdate ) {
             loadDataUpdate();
         }
@@ -66,17 +56,12 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         txtSdt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtGPA = new javax.swing.JTextField();
-        cbLop = new javax.swing.JComboBox<>();
         dpBirth = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(51, 255, 51));
-        setPreferredSize(new java.awt.Dimension(700, 400));
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(255, 102, 0), new java.awt.Color(204, 153, 0)));
@@ -94,13 +79,13 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sinh Viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(255, 0, 0))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giảng Viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(255, 0, 0))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Email");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Tên SV");
+        jLabel2.setText("Tên GV");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Ngày Sinh");
@@ -111,7 +96,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nu", "Khac", " " }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Mã SV");
+        jLabel7.setText("Mã GV");
 
         txtId.setEnabled(false);
 
@@ -120,14 +105,6 @@ public class SinhvienJFrame extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Địa chỉ");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("GPA");
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setText("Lớp Biên Chế");
-
-        txtGPA.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -154,27 +131,17 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtGPA, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(32, 32, 32))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cbLop, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(349, 349, 349))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dpBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dpBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(58, 58, 58)
@@ -203,14 +170,8 @@ public class SinhvienJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
-                    .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtGPA, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(69, 69, 69))
+                    .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(113, 113, 113))
             .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel2Layout.createSequentialGroup()
                 .addGap(109, 109, 109)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,22 +236,19 @@ public class SinhvienJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
-            sinhvien.setTen(txtTen.getText());
-            sinhvien.setNgay_sinh(ConvertDate(dpBirth));
-            sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
-            sinhvien.setEmail(txtEmail.getText());
-            sinhvien.setSđt(txtSdt.getText());
-            sinhvien.setDia_chi(txtAddress.getText());
-            sinhvien.setGpa(new BigDecimal(0));
+            giangVien.setTen(txtTen.getText());
+            giangVien.setNgay_sinh(ConvertDate(dpBirth));
+            giangVien.setGioi_tinh((String) cbGender.getSelectedItem());
+            giangVien.setEmail(txtEmail.getText());
+            giangVien.setSdt(txtSdt.getText());
+            giangVien.setDia_chi(txtAddress.getText());
             
-            MyComboBox item =(MyComboBox)cbLop.getSelectedItem();
-            sinhvien.setId_lopbienche(item.MaInt());
             
-            int a = SinhVienDAO.create(sinhvien);
+            int a = GiangVienDAO.create(giangVien);
             if (a>0) {
-                JOptionPane.showMessageDialog(this, "Thêm thông tin sinh viên thành công");
-                System.out.println("Cập nhật thông tin Sinh vien thành công!");
-                sinhvienJPanel.loaddata();
+                JOptionPane.showMessageDialog(this, "Thêm thông tin giảng viên thành công");
+                System.out.println("Thêm thông tin giảng viên thành công");
+                giangvienJPanel.loaddata();
                 this.dispose();
             }
         }catch (Exception e) {
@@ -303,59 +261,36 @@ public class SinhvienJFrame extends javax.swing.JFrame {
        try {
             //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
             
+            giangVien.setTen(txtTen.getText());
+            giangVien.setNgay_sinh(ConvertDate(dpBirth));
+            giangVien.setGioi_tinh((String) cbGender.getSelectedItem());
+            giangVien.setEmail(txtEmail.getText());
+            giangVien.setSdt(txtSdt.getText());
+            giangVien.setDia_chi(txtAddress.getText());
             
-            sinhvien.setTen(txtTen.getText());
-            sinhvien.setNgay_sinh(ConvertDate(dpBirth));        
-            sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
-            sinhvien.setEmail(txtEmail.getText());
-            sinhvien.setSđt(txtSdt.getText());
-            sinhvien.setDia_chi(txtAddress.getText());
-            sinhvien.setGpa(new BigDecimal(txtGPA.getText()));
-            
-            MyComboBox item =(MyComboBox)cbLop.getSelectedItem();
-            sinhvien.setId_lopbienche(item.MaInt());
-            
-            int a = SinhVienDAO.update(sinhvien);
+            int a = GiangVienDAO.update(giangVien);
             if (a>0) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thông tin sinh viên thành công");
-                System.out.println("Cập nhật thông tin Sinh vien thành công!");
-                sinhvienJPanel.loaddata();
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin giảng viên thành công");
+                System.out.println("Cập nhật thông tin giảng viên thành công!");
+                giangvienJPanel.loaddata();
                 this.dispose();
-            } 
+            }
         }catch (Exception e) {
             System.out.println("Error" + e);
         }
     }
     
     private void loadDataUpdate() {
-        txtId.setText(String.valueOf(sinhvien.getId()));
-        txtTen.setText(String.valueOf(sinhvien.getTen()));
-        dpBirth.setDate(sinhvien.getNgay_sinh());
-        cbGender.setSelectedItem(sinhvien.getGioi_tinh());
-        txtEmail.setText(String.valueOf(sinhvien.getEmail()));
-        txtSdt.setText(String.valueOf(sinhvien.getSđt()));
-        txtAddress.setText(String.valueOf(sinhvien.getDia_chi()));
-        txtGPA.setText(String.valueOf(sinhvien.getGpa()));
-        cbLop.setSelectedIndex(sinhvien.getId_lopbienche()-1);
+        txtId.setText(String.valueOf(giangVien.getId()));
+        txtTen.setText(String.valueOf(giangVien.getTen()));
+        dpBirth.setDate(giangVien.getNgay_sinh());
+        cbGender.setSelectedItem(giangVien.getGioi_tinh());
+        txtEmail.setText(String.valueOf(giangVien.getEmail()));
+        txtSdt.setText(String.valueOf(giangVien.getSdt()));
+        txtAddress.setText(String.valueOf(giangVien.getDia_chi()));
     }
    
-    private void loadCombobox() {
-        try {
-            
-            ArrayList<LopBienChe> list = LopBienCheDAO.list();
-            DefaultComboBoxModel cbLopModel = (DefaultComboBoxModel) cbLop.getModel();
-            
-            //cbLop.setPrototypeDisplayValue("id");
-            for (LopBienChe item : list) {
-                MyComboBox object = new MyComboBox(item.getId(), item.getTen_lop());
-                cbLopModel.addElement(object);
-                //cbLop.addItem(item);
-                
-            }
-        } catch(Exception e) {
-            
-        }
-    }
+    
     
     public Date ConvertDate(JDateChooser JDate) {
         java.util.Date utilDate = JDate.getDate();
@@ -365,12 +300,9 @@ public class SinhvienJFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbGender;
-    private javax.swing.JComboBox<Object> cbLop;
     private com.toedter.calendar.JDateChooser dpBirth;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -383,7 +315,6 @@ public class SinhvienJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtGPA;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtTen;

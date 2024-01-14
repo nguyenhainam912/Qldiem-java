@@ -6,7 +6,9 @@ package design;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import controller.MyComboBox;
 import dao.BangDiemDAO;
@@ -15,6 +17,7 @@ import dao.SinhVienDAO;
 import design.popup.BangdiemJFrame;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -369,18 +372,96 @@ public class BangdiemJPanel extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         Document document = new Document() ;
+        int id;
         try {
+            if(cbSV.getSelectedIndex() ==0) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa chọn sinh viên");
+                return;
+            }else {
+                MyComboBox item1 =(MyComboBox)cbSV.getSelectedItem();
+                id = item1.MaInt();
+            }
+            ArrayList<Object> list = BangDiemDAO.xuat(id);
+            Object[] objectArray1 = (Object[]) list.get(0);
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("my-file.pdf"));
             document.open();
-            document.add(new Paragraph("This is some text."));
+            document.setPageSize(PageSize.A0);
+            Paragraph paragraph = new Paragraph();
+            Paragraph phrase1 = new Paragraph("   BO GIAO DUC VA DAO TAO");
+            phrase1.add("                                 ");
+            phrase1.add("CONG HOA XA HOI CHU NGHIA VIET NAM");
+            phrase1.setLeading(10);
+            document.add(phrase1);
+            Paragraph phrase2 = new Paragraph("Truong Dai Hoc Kien Truc Ha Noi");
+            phrase2.add("                                         ");
+            phrase2.add("Doc lap - Tu do - Hanh phuc");
+            phrase2.setLeading(20);
+            document.add(phrase2);
+            Paragraph phrase3 = new Paragraph("             --------------------");
+            phrase3.add("                                                                   ");
+            phrase3.add("--------------------");
+            phrase3.setLeading(20);
+            document.add(phrase3);
+            Paragraph phrase6 = new Paragraph("                                                                  Phieu Diem");
+            phrase6.setLeading(40);
+            document.add(phrase6);
+            document.add(new Paragraph());
+            Paragraph phrase4 = new Paragraph("Ho và Ten:");
+            phrase4.add(" ");
+            phrase4.add((String) objectArray1[0]);
+            phrase4.setLeading(40);
+            document.add(phrase4);
+            Paragraph phrase5 = new Paragraph("TBC tich luy (He 10):");
+            phrase5.add(" ");
+            phrase5.add((String) objectArray1[7]);
+            phrase5.setLeading(20);
+            document.add(phrase5);
+            Paragraph phrase7 = new Paragraph(" ");
+            phrase7.setLeading(40);
+            document.add(phrase7);
+            PdfPTable table = new PdfPTable(8);
+            table.addCell("STT");
+            table.addCell("Ten hoc phan ");
+            table.addCell("So tin chi");
+            table.addCell("Diem qua trinh"); 
+            table.addCell("Diem thi"); 
+            table.addCell("TBCHP"); 
+            table.addCell("Diem so"); 
+            table.addCell("Diem chu"); 
+
+            for (int i = 0; i < list.size(); i++) {
+                Object[] objectArray = (Object[]) list.get(i);
+                System.out.println(objectArray[0]  );
+                table.addCell(String.valueOf(i+1));
+                table.addCell((String) objectArray[2]);
+                table.addCell((String) objectArray[3]);
+                table.addCell((String) objectArray[4]);
+                table.addCell((String) objectArray[5]);
+                double dou = Double.parseDouble((String) objectArray[6]);
+                table.addCell((String) String.format("%.2f", dou));
+
+                if (dou <= 10 && dou >= 8.5) {
+                    table.addCell("4");
+                    table.addCell("A");
+                } else if(dou < 8.5 && dou >= 7.0) {
+                    table.addCell("3");
+                    table.addCell("B");
+                } else if(dou < 7.0 && dou >= 5.5) {
+                    table.addCell("2");
+                    table.addCell("C");
+                } else if(dou < 5.5 && dou >= 4.0) {
+                    table.addCell("1");
+                    table.addCell("D");
+                } else if(dou < 4.0) {
+                    table.addCell("0");
+                    table.addCell("F");
+                } 
+            }
+            document.add(table);
             document.close();
         } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(BangdiemJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
     }//GEN-LAST:event_jButton4ActionPerformed
 
 

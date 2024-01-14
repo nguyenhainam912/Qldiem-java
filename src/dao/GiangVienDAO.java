@@ -46,7 +46,7 @@ public class GiangVienDAO extends DAO {
     public static GiangVien find(int _id) {
         GiangVien item = null;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM `tbl_giangvien` WHERE id = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_giangvien WHERE id = ?")) {
 
             ps.setInt(1, _id);
             ResultSet rs = ps.executeQuery();
@@ -70,7 +70,7 @@ public class GiangVienDAO extends DAO {
     public static int create(GiangVien item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO `tbl_giangvien`(`ten`, `ngay_sinh`, `gioi_tinh`, `sdt`, `email`,`dia_chi`) VALUES (?, ?, ?, ?, ?,?)")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_giangvien(ten, ngay_sinh, gioi_tinh, sdt, email,dia_chi) VALUES (?, ?, ?, ?, ?,?)")) {
 
             ps.setString(1, item.getTen());
             ps.setDate(2, item.getNgay_sinh());
@@ -88,7 +88,7 @@ public class GiangVienDAO extends DAO {
     public static int update(GiangVien item) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE `tbl_giangvien` SET `ten`=?,`ngay_sinh`=?,`gioi_tinh`=?,`sdt`=?,`email`=?, `dia_chi`= ? WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("UPDATE tbl_giangvien SET ten=?,ngay_sinh=?,gioi_tinh=?,sdt=?,email=?, dia_chi= ? WHERE id = ?")) {
 
             ps.setString(1, item.getTen());
             ps.setDate(2, item.getNgay_sinh());
@@ -108,7 +108,7 @@ public class GiangVienDAO extends DAO {
     public static int delete(int id) {
         int rows = 0;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM `tbl_giangvien` WHERE `id` = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_giangvien WHERE id= ?")) {
 
             ps.setInt(1, id);
 

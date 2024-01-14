@@ -6,6 +6,7 @@ package qldiem;
  */
 
 
+import design.DangNhap;
 import design.MainJFrame;
 
 /**
@@ -19,7 +20,7 @@ public class QlDiem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new MainJFrame().setVisible(true);
+        new DangNhap().setVisible(true);
         //aa
     }
     

@@ -46,7 +46,7 @@ public class BangDiemDAO {
         ArrayList<BangDiem> list = new ArrayList<>();
         BangDiem item = null;
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_bangdiem WHERE id_sinhvien = ISNULL(?, id_sinhvien) And id_hocphan = ISNULL(?, id_hocphan)")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_bangdiem WHERE id_sinhvien = ISNULL(?, id_sinhvien) And id_hocphan = ISNULL(?, id_hocphan) Order By id_sinhvien ASC")) {
             if(_id_sv == 0) {
                 ps.setNull(1, java.sql.Types.INTEGER);
             } else {
@@ -125,6 +125,57 @@ public class BangDiemDAO {
             System.out.println("Error: " + ex.toString());
         }
         return rows;
+    }
+    
+    public static ArrayList xuat(int id) {
+        ArrayList<Object> list = new ArrayList<>();
+// 
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("""
+                                                                                      select sv.id, sv.ten, sv.gpa,hp.ten_hocphan, hp.so_tin_chi, diem.diem_chuyen_can, diem.diem_thi, (diem.diem_chuyen_can * hp.so_tin_chi/10 + diem.diem_thi * (10-hp.so_tin_chi)/10) as Dtb From tbl_bangdiem as diem
+                                                                                     left join tbl_hocphan as hp on diem.id_hocphan = hp.id
+                                                                                     left join tbl_sinhvien as sv on diem.id_sinhvien = sv.id
+                                                                                     where diem.id_sinhvien = ?
+                                                                                     order by id_sinhvien""")) {
+            // lấy dữ liệu từ db -> add vào list 
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                
+                String a = rs.getString("id");
+                String b = rs.getString("ten");
+                String c = rs.getString("ten_hocphan");
+                String d = rs.getString("so_tin_chi");
+                String e = rs.getString("diem_chuyen_can");
+                String f = rs.getString("diem_thi");
+                String h = rs.getString("Dtb");
+                String g = rs.getString("gpa");
+                
+                list.add(new Object[]{a,b,c,d,e,f,h,g});
+               
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.toString());
+        }
+        return list;
+    }
+    
+    public static void tinhdiem(int id) {
+        try (Connection con = connect();) {
+            PreparedStatement ps = con.prepareStatement(""
+                    +   "UPDATE tbl_sinhvien SET gpa=(select (sum(diem.diem_chuyen_can * hp.so_tin_chi/10 + diem.diem_thi * (10-hp.so_tin_chi)/10) / count(diem.id_sinhvien)) "
+                    + " from tbl_bangdiem as diem" 
+                    +   " left join tbl_hocphan as hp" 
+                    +   " on diem.id_hocphan = hp.id" 
+                    +   " WHERE diem.id_sinhvien = ?" 
+                    +   " Group by diem.id_sinhvien) WHERE id = ?");
+            
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.toString());
+        }
     }
 }
 

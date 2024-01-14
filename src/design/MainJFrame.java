@@ -18,25 +18,32 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    public MainJFrame() {
+    public MainJFrame(int role) {
         initComponents();
         
         setTitle("Quản Lý Điểm Sinh Viên");
-        
         Chuyenman controller = new Chuyenman(pnView);
         
-       controller.setView(jPanel1, jLabel1);
+        controller.setView(jPanel1, jLabel1);
         
         List<DanhMuc> listItem = new ArrayList<>();
         listItem.add(new DanhMuc("TrangChu", jPanel1, jLabel1));
-        listItem.add(new DanhMuc("Giangvien", jPanel3, jLabel4));
-        listItem.add(new DanhMuc("Sinhvien", jPanel2, jLabel2));
-        listItem.add(new DanhMuc("Hocphan", jPanel4, jLabel5));
         listItem.add(new DanhMuc("Lopbienche", jPanel5, jLabel6));
         listItem.add(new DanhMuc("Lophocphan", jPanel6, jLabel7));
-        listItem.add(new DanhMuc("Bangdiem", jPanel7, jLabel8));
-        listItem.add(new DanhMuc("Chitietlophocphan", jPanel8, jLabel9));
-
+        if(role == 2) {
+            jPanel4.setVisible(false);
+            jPanel7.setVisible(false);
+            jPanel3.setVisible(false);
+            jPanel2.setVisible(false);
+            jPanel8.setVisible(false);
+        }
+        if(role==1) {
+            listItem.add(new DanhMuc("Hocphan", jPanel4, jLabel5));
+            listItem.add(new DanhMuc("Bangdiem", jPanel7, jLabel8));
+            listItem.add(new DanhMuc("Giangvien", jPanel3, jLabel4));
+            listItem.add(new DanhMuc("Sinhvien", jPanel2, jLabel2));
+            listItem.add(new DanhMuc("Chitietlophocphan", jPanel8, jLabel9));
+        }
         controller.setEvent(listItem);
         
     }

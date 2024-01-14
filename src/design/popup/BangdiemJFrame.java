@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import model.BangDiem;
 import model.SinhVien;
 import model.HocPhan;
@@ -232,6 +233,8 @@ public class BangdiemJFrame extends javax.swing.JFrame {
 
             int a = BangDiemDAO.create(bangdiem);
             if (a>0) {
+                BangDiemDAO.tinhdiem(item1.MaInt());
+                JOptionPane.showMessageDialog(this, "Thêm thông tin điểm thành công");
                 System.out.println("Cập nhật thông tin Sinh vien thành công!");
                 bangdiemJPanel.loaddata(0,0);
                 this.dispose();
@@ -250,7 +253,7 @@ public class BangdiemJFrame extends javax.swing.JFrame {
             bangdiem.setId_sinhvien(item1.MaInt());
             
             MyComboBox item2 =(MyComboBox)cbHp.getSelectedItem();
-            bangdiem.setId_sinhvien(item2.MaInt());
+            bangdiem.setId_hocphan(item2.MaInt());
             
             bangdiem.setNgay_thi(ConvertDate(dpNgayThi));
             bangdiem.setDiem_chuyen_can(new BigDecimal(txtDcc.getText()));
@@ -258,6 +261,8 @@ public class BangdiemJFrame extends javax.swing.JFrame {
             
             int a = BangDiemDAO.update(bangdiem);
             if (a>0) {
+                BangDiemDAO.tinhdiem(item1.MaInt());
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin điểm thành công");
                 System.out.println("Cập nhật thông tin Sinh vien thành công!");
                 bangdiemJPanel.loaddata(0,0);
                 this.dispose();
