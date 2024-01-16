@@ -4,6 +4,7 @@
  */
 package design.popup;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import controller.MyComboBox;
 import dao.BangDiemDAO;
 import dao.HocPhanDAO;
@@ -36,6 +37,8 @@ public class BangdiemJFrame extends javax.swing.JFrame {
         this.bangdiem = bangdiem;
         this.isUpdate = isUpdate;
         loadCombobox();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) dpNgayThi.getDateEditor();
+        editor.setEditable(false);
         if (isUpdate ) {
             loadDataUpdate();
         }
@@ -222,6 +225,7 @@ public class BangdiemJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
+            if(check() == false) return; 
             MyComboBox item1 =(MyComboBox)cbSV.getSelectedItem();
             bangdiem.setId_sinhvien(item1.MaInt());
             
@@ -249,7 +253,7 @@ public class BangdiemJFrame extends javax.swing.JFrame {
     private void updateData()  {
        try {
             //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
-            
+            if(check() == false) return; 
             MyComboBox item1 =(MyComboBox)cbSV.getSelectedItem();
             bangdiem.setId_sinhvien(item1.MaInt());
             
@@ -302,6 +306,34 @@ public class BangdiemJFrame extends javax.swing.JFrame {
         } catch(Exception e) {
             
         }
+    }
+    
+    private boolean check() {
+        boolean ischeck = false;
+        try {
+            if (dpNgayThi.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn ngày thi !!!");
+                return ischeck;
+            }
+            
+            String dcc = txtDcc.getText();
+            boolean isValid1 = dcc.matches("^[0-9]+(\\.[0-9]+)?$");
+            if(isValid1 == false) {
+                JOptionPane.showMessageDialog(this, "Chưa nhập đúng định dạng của điểm chuyên cần!!!");
+                return ischeck;
+            }
+            
+            String thi = txtDthi.getText();
+            boolean isValid2 = thi.matches("^[0-9]+(\\.[0-9]+)?$");
+            if(isValid2 == false) {
+                JOptionPane.showMessageDialog(this, "Chưa nhập đúng định dạng của điểm thi!!!");
+                return ischeck;
+            }
+            ischeck = true;
+        }catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return ischeck;
     }
     
     public Date ConvertDate(JDateChooser JDate) {

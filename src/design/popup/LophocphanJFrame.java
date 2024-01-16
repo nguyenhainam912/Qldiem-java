@@ -250,6 +250,7 @@ public class LophocphanJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
+            if(check() == false) return; 
             lopHocPhan.setTen(txtTen.getText());
             
             MyComboBox item =(MyComboBox)cbHp.getSelectedItem();
@@ -277,6 +278,7 @@ public class LophocphanJFrame extends javax.swing.JFrame {
 
     private void updateData()  {
        try {
+           if(check() == false) return; 
             //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
             lopHocPhan.setTen(txtTen.getText());
             
@@ -336,7 +338,35 @@ public class LophocphanJFrame extends javax.swing.JFrame {
             
         }
     }
-    
+    private boolean check() {
+        boolean ischeck = false;
+        try {
+            if (txtTen.getText().isEmpty() == true) {
+                JOptionPane.showMessageDialog(this, "Chưa nhập tên lớp!!!");
+                return ischeck;
+            }
+            
+            if (dpStart.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn ngày bắt đầu !!!");
+                return ischeck;
+            }
+            
+             if (dpEnd.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn ngày kết thúc !!!");
+                return ischeck;
+            }
+             
+              if (dpThi.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn ngày thi !!!");
+                return ischeck;
+            }
+            
+            ischeck = true;
+        }catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return ischeck;
+    }
     public Date ConvertDate(JDateChooser JDate) {
         java.util.Date utilDate = JDate.getDate();
         long milliseconds = utilDate.getTime();  // Get milliseconds since the epoch

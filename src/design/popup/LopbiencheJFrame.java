@@ -180,6 +180,7 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
+            if(check() == false) return; 
             lopBienChe.setTen_lop(txtTen.getText());
             
             MyComboBox item =(MyComboBox)cbGiangvien.getSelectedItem();
@@ -200,6 +201,7 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
 
     private void updateData()  {
        try {
+           if(check() == false) return; 
             lopBienChe.setTen_lop(txtTen.getText());
             
             MyComboBox item =(MyComboBox)cbGiangvien.getSelectedItem();
@@ -240,7 +242,20 @@ public class LopbiencheJFrame extends javax.swing.JFrame {
             
         }
     }
-    
+    private boolean check() {
+        boolean ischeck = false;
+        try {
+            if (txtTen.getText().isEmpty() == true) {
+                JOptionPane.showMessageDialog(this, "Chưa nhập tên lớp!!!");
+                return ischeck;
+            }
+            
+            ischeck = true;
+        }catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return ischeck;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Object> cbGiangvien;
     private javax.swing.JButton jButton1;

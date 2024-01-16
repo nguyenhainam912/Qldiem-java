@@ -180,6 +180,7 @@ public class HocphanJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
+            if(check() == false) return; 
             hocPhan.setTen_hocphan(txtTen.getText());
             hocPhan.setSo_tin_chi((Integer.parseInt((String) cbTinchi.getSelectedItem())));
             
@@ -200,7 +201,7 @@ public class HocphanJFrame extends javax.swing.JFrame {
        try {
             //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
             
-            
+            if(check() == false) return; 
             hocPhan.setTen_hocphan(txtTen.getText());
             hocPhan.setSo_tin_chi((Integer.parseInt((String) cbTinchi.getSelectedItem())));
             
@@ -221,6 +222,21 @@ public class HocphanJFrame extends javax.swing.JFrame {
         txtTen.setText(String.valueOf(hocPhan.getTen_hocphan()));
         cbTinchi.setSelectedItem(String.valueOf(hocPhan.getSo_tin_chi()));
         
+    }
+    
+    private boolean check() {
+        boolean ischeck = false;
+        try {
+            if (txtTen.getText().isEmpty() == true) {
+                JOptionPane.showMessageDialog(this, "Chưa nhập tên học phần !!!");
+                return ischeck;
+            }
+            
+            ischeck = true;
+        }catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return ischeck;
     }
    
     

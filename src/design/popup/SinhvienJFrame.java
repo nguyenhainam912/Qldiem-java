@@ -276,6 +276,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
 
     private void insertData() {
         try {
+            if(check() == false) return; 
             sinhvien.setTen(txtTen.getText());
             sinhvien.setNgay_sinh(ConvertDate(dpBirth));
             sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
@@ -304,7 +305,7 @@ public class SinhvienJFrame extends javax.swing.JFrame {
        try {
             //BigDecimal bigDecimal = new BigDecimal(txtGPA.getText());
             
-            
+            if(check() == false) return; 
             sinhvien.setTen(txtTen.getText());
             sinhvien.setNgay_sinh(ConvertDate(dpBirth));        
             sinhvien.setGioi_tinh((String) cbGender.getSelectedItem());
@@ -356,6 +357,40 @@ public class SinhvienJFrame extends javax.swing.JFrame {
         } catch(Exception e) {
             
         }
+    }
+    
+    private boolean check() {
+        boolean ischeck = false;
+        try {
+            if (txtTen.getText().isEmpty() == true) {
+                JOptionPane.showMessageDialog(this, "Chưa nhập tên !!!");
+                return ischeck;
+            }
+            
+            if (dpBirth.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn ngày sinh !!!");
+                return ischeck;
+            }
+            
+            String email = txtEmail.getText();
+            boolean isValidEmail = email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
+            if(isValidEmail == false) {
+                JOptionPane.showMessageDialog(this, "Chưa đúng định dạng email !!!");
+                return ischeck;
+            }
+            
+            String phone = txtSdt.getText();
+            boolean isValidPhone = phone.matches("^[0-9]{9,10}$");
+            if(isValidPhone == false) {
+                JOptionPane.showMessageDialog(this, "Chưa đúng định dạng sdt !!!");
+                return ischeck;
+            }
+            
+            ischeck = true;
+        }catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return ischeck;
     }
     
     public Date ConvertDate(JDateChooser JDate) {
