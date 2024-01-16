@@ -43,15 +43,15 @@ public class GiangVienDAO extends DAO {
         return list;
     }
 
-    public static GiangVien find(int _id) {
-        GiangVien item = null;
+    public static ArrayList<GiangVien> find(String _ten) {
+        ArrayList<GiangVien> list = new ArrayList<>();
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_giangvien WHERE id = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_giangvien WHERE ten Like '%'+ ? +'%'")) {
 
-            ps.setInt(1, _id);
+            ps.setString(1, _ten);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String ten = rs.getString("ten");
                 Date ngay_sinh = rs.getDate("ngay_sinh");
@@ -59,12 +59,13 @@ public class GiangVienDAO extends DAO {
                 String sdt = rs.getString("sdt");
                 String email = rs.getString("email");
                 String dia_chi = rs.getString("dia_chi");
-                item = new GiangVien(id, ten, ngay_sinh, gioi_tinh, sdt, email, dia_chi);
+                GiangVien item = new GiangVien(id, ten, ngay_sinh, gioi_tinh, sdt, email, dia_chi);
+                list.add(item);
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());
         }
-        return item;
+        return list;
     }
 
     public static int create(GiangVien item) {

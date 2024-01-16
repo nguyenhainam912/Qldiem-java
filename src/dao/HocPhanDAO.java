@@ -28,25 +28,26 @@ public class HocPhanDAO extends DAO{
         return list;
     }
 
-    public static HocPhan find(int _id) {
-        HocPhan item = null;
+    public static ArrayList<HocPhan> find(String _ten) {
+        ArrayList<HocPhan> list = new ArrayList<>();
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_hocphan WHERE id = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_hocphan WHERE ten_hocphan Like '%'+ ? +'%'")) {
 
-            ps.setInt(1, _id);
+            ps.setString(1, _ten);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String ten_hocphan = rs.getString("ten_hocphan");
                 int so_tin_chi = rs.getInt("so_tin_chi");
 
-                item = new HocPhan(id, ten_hocphan, so_tin_chi);
+                HocPhan item = new HocPhan(id, ten_hocphan, so_tin_chi);
+                list.add(item);
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());
         }
-        return item;
+        return list;
     }
 
     public static int create(HocPhan item) {

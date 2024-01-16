@@ -36,15 +36,15 @@ public class SinhVienDAO extends DAO {
         return list;
     }
 
-    public static SinhVien find(int _id) {
-        SinhVien item = null;
+    public static ArrayList<SinhVien> find(String _ten) {
+        ArrayList<SinhVien> list = new ArrayList<>();
 
-        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_sinhvien WHERE id = ?")) {
+        try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_sinhvien WHERE ten Like '%'+ ? +'%'")) {
 
-            ps.setInt(1, _id);
+            ps.setString(1, _ten);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String ten = rs.getString("ten");
                 Date ngay_sinh = rs.getDate("ngay_sinh");
@@ -55,12 +55,13 @@ public class SinhVienDAO extends DAO {
                 BigDecimal gpa = rs.getBigDecimal("gpa");
                 int id_lopbienche = rs.getInt("id_lopbienche");
 
-                item = new SinhVien(id, ten, ngay_sinh, gioi_tinh, sdt, email, dia_chi, gpa, id_lopbienche);
+                SinhVien item = new SinhVien(id, ten, ngay_sinh, gioi_tinh, sdt, email, dia_chi, gpa, id_lopbienche);
+                list.add(item);
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());
         }
-        return item;
+        return list;
     }
 
     public static int create(SinhVien item) {

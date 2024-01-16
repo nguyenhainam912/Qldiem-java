@@ -16,12 +16,15 @@ import dao.HocPhanDAO;
 import dao.SinhVienDAO;
 import design.popup.BangdiemJFrame;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -383,7 +386,7 @@ public class BangdiemJPanel extends javax.swing.JPanel {
             }
             ArrayList<Object> list = BangDiemDAO.xuat(id);
             Object[] objectArray1 = (Object[]) list.get(0);
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("my-file.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("filediem.pdf"));
             document.open();
             document.setPageSize(PageSize.A0);
             Paragraph paragraph = new Paragraph();
@@ -408,12 +411,28 @@ public class BangdiemJPanel extends javax.swing.JPanel {
             document.add(new Paragraph());
             Paragraph phrase4 = new Paragraph("Ho và Ten:");
             phrase4.add(" ");
-            phrase4.add((String) objectArray1[0]);
+            phrase4.add((String) objectArray1[1]);
             phrase4.setLeading(40);
             document.add(phrase4);
             Paragraph phrase5 = new Paragraph("TBC tich luy (He 10):");
             phrase5.add(" ");
             phrase5.add((String) objectArray1[7]);
+            phrase5.add("                                           "); 
+            phrase5.add("Xep loai hoc tap (He 10): ");
+            double dou1 = Double.parseDouble((String) objectArray1[7]);
+            if (dou1 <= 10 && dou1 >= 9) {
+                phrase5.add("Xuat sac");
+            } else if(dou1 < 9 && dou1 >= 8) {
+                phrase5.add("Gioi");
+            } else if(dou1 < 8 && dou1 >= 7) {
+               phrase5.add("Kha");
+            } else if(dou1 < 7 && dou1 >= 5) {
+                phrase5.add("Trung binh");
+            } else if(dou1 < 5 && dou1 >= 4) {
+                phrase5.add("Yeu");
+            }else if(dou1 < 4) {
+                 phrase5.add("Kem");
+            } 
             phrase5.setLeading(20);
             document.add(phrase5);
             Paragraph phrase7 = new Paragraph(" ");
@@ -458,8 +477,19 @@ public class BangdiemJPanel extends javax.swing.JPanel {
                 } 
             }
             document.add(table);
+            Paragraph phrase8 = new Paragraph("");
+            phrase8.add("                                                                                          ");
+            phrase8.add("Ha Noi, ngay...thang...nam...");
+            phrase8.setLeading(60);
+            document.add(phrase8);
+            
             document.close();
+            Desktop desktop = Desktop.getDesktop();
+
+            desktop.open(new File("D:\\WorkSpace\\java\\swingdemo\\New folder\\Qldiem-java\\filediem.pdf"));
         } catch (FileNotFoundException | DocumentException ex) {
+            Logger.getLogger(BangdiemJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(BangdiemJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
