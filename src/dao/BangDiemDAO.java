@@ -131,7 +131,7 @@ public class BangDiemDAO {
         ArrayList<Object> list = new ArrayList<>();
 // 
         try (Connection con = connect(); PreparedStatement ps = con.prepareStatement("""
-                                                                                      select sv.id, sv.ten, sv.gpa,hp.ten_hocphan, hp.so_tin_chi, diem.diem_chuyen_can, diem.diem_thi, (diem.diem_chuyen_can * hp.so_tin_chi/10 + diem.diem_thi * (10-hp.so_tin_chi)/10) as Dtb From tbl_bangdiem as diem
+                                                                                      select sv.id, sv.ten,sv.gpa,hp.ten_hocphan, hp.so_tin_chi, diem.diem_chuyen_can, diem.diem_thi, (diem.diem_chuyen_can * hp.so_tin_chi/10 + diem.diem_thi * (10-hp.so_tin_chi)/10) as Dtb From tbl_bangdiem as diem
                                                                                      left join tbl_hocphan as hp on diem.id_hocphan = hp.id
                                                                                      left join tbl_sinhvien as sv on diem.id_sinhvien = sv.id
                                                                                      where diem.id_sinhvien = ?

@@ -50,7 +50,7 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel1.setMinimumSize(new java.awt.Dimension(80, 20));
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\WorkSpace\\java\\swingdemo\\New folder\\Qldiem-java\\src\\image\\logotruong.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\WorkSpace\\java\\swingdemo\\qlDiem\\src\\image\\logotruong.png")); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Tài Khoản");
@@ -129,6 +129,7 @@ public class DangNhap extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed

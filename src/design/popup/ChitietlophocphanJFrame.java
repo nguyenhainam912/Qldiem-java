@@ -103,9 +103,9 @@ public class ChitietlophocphanJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbSV, 0, 187, Short.MAX_VALUE)
-                    .addComponent(cbLHP, 0, 187, Short.MAX_VALUE))
+                    .addComponent(cbLHP, 0, 187, Short.MAX_VALUE)
+                    .addComponent(txtId))
                 .addGap(353, 353, 353))
         );
         jPanel2Layout.setVerticalGroup(

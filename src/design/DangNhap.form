@@ -9,7 +9,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -114,7 +114,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="D:\WorkSpace\java\swingdemo\New folder\Qldiem-java\src\image\logotruong.png"/>
+          <Image iconType="2" name="D:\WorkSpace\java\swingdemo\qlDiem\src\image\logotruong.png"/>
         </Property>
       </Properties>
     </Component>

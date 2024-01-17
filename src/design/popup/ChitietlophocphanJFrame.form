@@ -141,9 +141,9 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtId" alignment="0" min="-2" pref="178" max="-2" attributes="0"/>
                           <Component id="cbSV" alignment="0" pref="187" max="32767" attributes="0"/>
                           <Component id="cbLHP" alignment="0" pref="187" max="32767" attributes="0"/>
+                          <Component id="txtId" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="353" max="-2" attributes="0"/>
                   </Group>

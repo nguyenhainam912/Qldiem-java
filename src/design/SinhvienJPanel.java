@@ -131,7 +131,7 @@ public class SinhvienJPanel extends javax.swing.JPanel {
             }
         });
 
-        tbSinhVien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        tbSinhVien.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -145,7 +145,7 @@ public class SinhvienJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã SV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SDT", "Email", "Địa Chỉ", "GPA", "Lớp"
+                "Mã SV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SDT", "Email", "Địa Chỉ", "GPA", "Mã Lớp"
             }
         ) {
             Class[] types = new Class [] {

@@ -42,7 +42,7 @@ public class TrangchuJPanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(230, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 680));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/truong-dai-hoc-kien-truc-ha-noi-2.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\WorkSpace\\java\\swingdemo\\qlDiem\\src\\image\\truong-dai-hoc-kien-truc-ha-noi-2.jpg")); // NOI18N
         jLabel1.setToolTipText("");
 
         jLabel2.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
@@ -106,7 +106,7 @@ public class TrangchuJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addGap(0, 56, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +151,7 @@ public class TrangchuJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1062, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

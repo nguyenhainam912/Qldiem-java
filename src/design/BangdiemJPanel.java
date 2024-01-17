@@ -27,11 +27,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.FileChooserUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import model.BangDiem;
@@ -433,7 +435,7 @@ public class BangdiemJPanel extends javax.swing.JPanel {
             }else if(dou1 < 4) {
                  phrase5.add("Kem");
             } 
-            phrase5.setLeading(20);
+            phrase5.setLeading(30);
             document.add(phrase5);
             Paragraph phrase7 = new Paragraph(" ");
             phrase7.setLeading(40);
@@ -477,16 +479,22 @@ public class BangdiemJPanel extends javax.swing.JPanel {
                 } 
             }
             document.add(table);
+            LocalDate today = LocalDate.now();
+            int year = today.getYear();
+            int month = today.getMonthValue();
+            int dayOfMonth = today.getDayOfMonth();
             Paragraph phrase8 = new Paragraph("");
             phrase8.add("                                                                                          ");
-            phrase8.add("Ha Noi, ngay...thang...nam...");
+            phrase8.add("Ha Noi, ngay " + dayOfMonth +" thang "+ month +" nam " + year);
             phrase8.setLeading(60);
-            document.add(phrase8);
             
+            document.add(phrase8);
             document.close();
+            
             Desktop desktop = Desktop.getDesktop();
 
-            desktop.open(new File("D:\\WorkSpace\\java\\swingdemo\\New folder\\Qldiem-java\\filediem.pdf"));
+            desktop.open(new File(System.getProperty("user.dir")+ "\\filediem.pdf"));
+            
         } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(BangdiemJPanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
